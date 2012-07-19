@@ -54,6 +54,7 @@ containing a value of this type.
         public static final int City=0x7f040005;
         public static final int Location=0x7f040003;
         public static final int Organization=0x7f040002;
+        public static final int RepositoryName=0x7f040008;
         public static final int URL=0x7f040006;
         public static final int app_name=0x7f040001;
         public static final int close=0x7f040007;

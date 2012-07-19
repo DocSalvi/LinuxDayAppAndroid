@@ -290,7 +290,8 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
 			// mOsmBrowser.setTags(new LDTag(null, titles, LugManCSV, getResources()));
 			GeoTag taglist = null;
 			try {
-				URL url = new URL("http://www.linuxday.it/2011/data/");
+				// URL url = new URL("http://www.linuxday.it/2011/data/");
+				URL url = new URL(getResources().getString(R.string.RepositoryName));
 				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 				String str = in.readLine().trim();
 				String titles[] = OsmBrowser.csvParser(str);    // La prima linea sono i titoli

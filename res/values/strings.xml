@@ -27,5 +27,6 @@
     <string name="City">Città :</string>
     <string name="URL">Sito WEB :</string>
     <string name="close">Chiudi</string>
+    <string name="RepositoryName">http://www.linuxday.it/2011/data/</string>
 
 </resources>

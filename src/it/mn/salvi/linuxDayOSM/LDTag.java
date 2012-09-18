@@ -31,6 +31,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.net.Uri;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -54,12 +55,12 @@ public class LDTag extends GeoTag implements View.OnTouchListener {
     init (res);
   }
 
-  public LDTag (GeoTag next, String[] titles, String record, Resources res) {
+  public LDTag (GeoTag next, String[] titles, String record, Resources res) throws Exception {
     super(next, null, new Dimension(20,24), new Point (10,24));
     String[] fields = OsmBrowser.csvParser(record);
-      for (int i = 0; i < fields.length; i++) {
-        System.out.println(fields[i]);
-      }
+    //  for (int i = 0; i < fields.length; i++) {
+    //    System.out.println(fields[i]);
+    //  }
     organizzazione = fields[0];
     luogo = fields[1];
     indirizzo = fields[2];
@@ -69,8 +70,12 @@ public class LDTag extends GeoTag implements View.OnTouchListener {
     // GEOMETRYCOLLECTION(POINT(10.76773 45.13915))
     Pattern p = Pattern.compile(".*POINT[ \t]*\\(([0-9.]*)&?[^0-9.]*([0-9.]*)&?\\).*");
     Matcher m = p.matcher(fields[6]);
-    System.out.println("Coordinate : " + fields[6] + " Pattern trovato " + m.matches());
-      setCoords(new GeoPoint(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(1))));
+    // System.out.println("Coordinate : " + fields[6] + " Pattern trovato " + m.matches());
+    if (m.matches()) {
+    	setCoords(new GeoPoint(Double.parseDouble(m.group(2)), Double.parseDouble(m.group(1))));
+    } else {
+    	throw new Exception("Mancano le coordinate");
+    }
     init (res);
   }
 
@@ -94,21 +99,10 @@ public class LDTag extends GeoTag implements View.OnTouchListener {
     final Dialog dialog = new Dialog(context);
     dialog.setContentView(R.layout.ld_dialog_layout);
     dialog.setTitle("Evento...");
-    TextView text = (TextView) dialog.findViewById(R.id.organization);
-    text.setText(organizzazione);
-
-    text = (TextView) dialog.findViewById(R.id.Location);
-    text.setText(luogo);
-
-    text = (TextView) dialog.findViewById(R.id.address);
-    text.setText(indirizzo);
-
-    text = (TextView) dialog.findViewById(R.id.city);
-    text.setText(citta + " (" + provincia + ")");
-
-    text = (TextView) dialog.findViewById(R.id.url);
-    text.setText(sito);
-    text.setOnTouchListener(this);
+    
+    TextView text = (TextView) dialog.findViewById(R.id.content);
+	text.setText(Html.fromHtml(context.getString(R.string.LinuxDayDialog, organizzazione, luogo, indirizzo, citta + " (" + provincia + ")", sito)));
+    
 
     Button dialogButton = (Button) dialog.findViewById(R.id.close);
     // if button is clicked, close the custom dialog
@@ -124,11 +118,6 @@ public class LDTag extends GeoTag implements View.OnTouchListener {
 
   @Override
   public boolean onTouch(View currentView, MotionEvent event) {
-	  if (event.getAction() == MotionEvent.ACTION_UP) {
-		  Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sito));
-		  currentView.getContext().startActivity(browserIntent);
-	  }
-
 	  return true;
   }
 }

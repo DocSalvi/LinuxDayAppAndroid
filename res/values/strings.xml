@@ -27,6 +27,18 @@
     <string name="City">Città :</string>
     <string name="URL">Sito WEB :</string>
     <string name="close">Chiudi</string>
-    <string name="RepositoryName">http://www.linuxday.it/2011/data/</string>
-
+    <string name="RepositoryName">http://www.linuxday.it/data/</string>
+    <string name="RepositoryNameOld">http://www.linuxday.it/2011/data/</string>
+    <string name="LugMapRepositoryName">http://lugmap.it/dati.txt</string>
+    <string name="ILSref"><![CDATA[<h1>ITALIAN LINUX SOCIETY</h1>http://www.linux.it]]></string>
+    <string name="GreetingText"><![CDATA[<h2>LinuxDayApp</h2>
+        <b>Autore:</b> Stefano Salvi mailto:<u>stefano.salvi@linux.it</u><br/>Rilasciato con licenza <b>GPL</b>: <u>http://www.gnu.org/licenses/gpl.html</u><br />
+        Il codice sorgente pu&ograve; essere scaricato all\'indirizzo <u>https://github.com/DocSalvi/LinuxDayAppAndroid</u><br />
+        Le mappe sono scaricate dal progetto <b>OpenStreetMap</b>: <u>http://www.openstreetmap.org/</u>]]></string>
+    <color name="lightgrey">#dddddd</color>
+    <color name="black">#000000</color>
+    <color name="link">#0000cc</color>
+    <string name="LinuxDayDialog"><![CDATA[<p><b>Organizzazione: </b>%1$s</p><p><b>Luogo: </b>%2$s</b><p><b>Indirizzo: </b>%3$s</p><p><b>Città: </b>%4$s</p><p><b>Sito WEB: </b>%5$s</p>]]></string>
+    <string name="LugDialog"><![CDATA[<p><b>Organizzazione: </b>%1$s</p><p><b>Sito WEB: </b>%2$s</p>]]></string>
+    
 </resources>

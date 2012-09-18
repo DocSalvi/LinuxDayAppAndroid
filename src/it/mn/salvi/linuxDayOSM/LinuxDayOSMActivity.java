@@ -65,6 +65,9 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
     // Set to false when location services are
     // unavailable.
     private boolean locationAvailable = true;
+    
+    Greeting greeting;
+	private Thread greetingTimer;
 
     /** Called when the activity is first created. */
     @Override
@@ -78,6 +81,10 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
         mOsmBrowser.setTilesDir(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + packageName + "/files/Tiles");
         mOsmBrowser.setZoomBar((SeekBar) findViewById(R.id.zoomBar));
         
+        greeting = new Greeting(mOsmBrowser.getContext(), false);
+        greetingTimer = new Thread(this);
+        greetingTimer.start();
+
         loadTags = new Thread(this);
         loadTags.start();
         // changeLocation(locationManagerNet.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
@@ -209,6 +216,10 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
     			mOsmBrowser.postInvalidate();
     		}
     		return true;
+    		
+    	case R.id.menu_info:
+    		new Greeting(mOsmBrowser.getContext(), true);
+    		return true;
 
     	default:
     		return super.onOptionsItemSelected(item);
@@ -286,25 +297,58 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
 
 	@Override
 	public void run() {
+		if (Thread.currentThread() == greetingTimer) {
+			try {
+				Thread.sleep(10000);
+			} catch (Exception e) {
+			}
+			greeting.close();
+			greeting=null;
+		}
 		if (Thread.currentThread() == loadTags) {
 			// mOsmBrowser.setTags(new LDTag(null, titles, LugManCSV, getResources()));
 			GeoTag taglist = null;
 			try {
+				URL url = null;
 				// URL url = new URL("http://www.linuxday.it/2011/data/");
-				URL url = new URL(getResources().getString(R.string.RepositoryName));
-				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-				String str = in.readLine().trim();
-				String titles[] = OsmBrowser.csvParser(str);    // La prima linea sono i titoli
-				while ((str = in.readLine()) != null) {
-					if (!str.startsWith("\"\",")) { // Salta le linee vuote
-						System.out.println(str);
-						try {   // Per intercettare gli errori di parsing delle coordinate
-							taglist = new LDTag(taglist, titles, str, getResources());
-						} catch (Exception e) {
-							e.printStackTrace();
+				try {
+					url = new URL(getResources().getString(R.string.RepositoryName));
+				} catch (Exception e) {
+					try {
+						url = new URL(getResources().getString(R.string.RepositoryName));
+					} catch (Exception e1) {
+						url = null;
+					}
+				}
+				if (url != null) {
+					BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+					String str = in.readLine().trim();
+					String titles[] = OsmBrowser.csvParser(str);    // La prima linea sono i titoli
+					while ((str = in.readLine()) != null) {
+						if (!str.startsWith("\"\",")) { // Salta le linee vuote
+							System.out.println(str);
+							try {   // Per intercettare gli errori di parsing delle coordinate
+								taglist = new LDTag(taglist, titles, str, getResources());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				}
+				
+				url = new URL(getResources().getString(R.string.LugMapRepositoryName));
+				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+				String str = in.readLine().trim();
+				String titles[] = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+				while ((str = in.readLine()) != null) {
+					System.out.println(str);
+					try {   // Per intercettare gli errori di parsing delle coordinate
+						taglist = new LMTag(taglist, titles, str, getResources());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
 				mOsmBrowser.setTags(taglist);
 			} catch (Exception e) {
 				e.printStackTrace();

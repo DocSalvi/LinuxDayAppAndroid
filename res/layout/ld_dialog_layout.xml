@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- ld_dialog_layour.xml
+ ld_dialog_layout.xml
  LinuxDayOSM
  Copyright (C) Stefano Salvi 2012 <stefano@salvi.mn.it>
 
@@ -21,7 +21,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,8 +111,9 @@
         android:layout_below="@+id/textView5"
         android:clickable="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:autoLink="web"
         android:textStyle="italic"
-        android:textColor="#0000ff" />
+        android:textColor="#0000ff" /> -->
 
     <Button
         android:id="@+id/close"
@@ -121,5 +122,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="@string/close" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/close"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:autoLink="web|email"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

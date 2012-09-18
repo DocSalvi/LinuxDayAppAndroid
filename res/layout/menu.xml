@@ -28,4 +28,8 @@
     <item android:id="@+id/menu_center"
           android:icon="@drawable/icon_target"
           android:title="Centra tua posizione" />
+
+    <item android:id="@+id/menu_info"
+          android:icon="@drawable/icon_info"
+          android:title="Informazioni" />
 </menu>

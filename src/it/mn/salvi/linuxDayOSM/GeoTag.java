@@ -55,7 +55,7 @@ public abstract class GeoTag {
   protected void setCoords (GeoPoint coords) {
     this.coords = coords;
     absolutePos = new Point(OsmBrowser.long2absolutex(coords.lon), OsmBrowser.lat2absolutey(coords.lat));
-    System.out.println("GeoTag Coords: lat" + coords.lat + " lon " + coords.lon + " AbsolutePos " + absolutePos.x + "x" + absolutePos.y);
+    // System.out.println("GeoTag Coords: lat" + coords.lat + " lon " + coords.lon + " AbsolutePos " + absolutePos.x + "x" + absolutePos.y);
   }
 
   public void paint (Canvas canvas, Paint paint, Point absTopLeft, Point absBottomRight, int scale) {

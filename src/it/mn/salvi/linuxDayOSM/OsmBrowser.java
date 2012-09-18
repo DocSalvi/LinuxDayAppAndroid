@@ -117,7 +117,7 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
         oldTile = new Point();
         screenCorner = new Point();
         setScreenCorner (tileSize, tileSize);
-//      loadTiles ();
+        loadTiles ();
         mScaleDetector = new ScaleGestureDetector(context, this);
         mDetector = new GestureDetector(context, this);
 
@@ -277,12 +277,12 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
 	   for (GeoTag t = tagList; t != null; t = t.getNext()) {
 		   t.paint(canvas, mPaint, absTopLeft, absBottomRight, scale);
 	   }
-	   canvas.drawText("Zoom : " + tileZoom, (float)10.0, (float)20.0, mPaint);
+	   /* canvas.drawText("Zoom : " + tileZoom, (float)10.0, (float)20.0, mPaint);
 	   canvas.drawText("Coordinate tile : " + firstTile.x + "x" + firstTile.y, (float)10, (float)34, mPaint);
 	   canvas.drawText("Dimensione array : " + tilesSize.width + "x" + tilesSize.height, (float)10, (float)48, mPaint);
 	   canvas.drawText("Offset Schermo : " + screenCorner.x + "x" + screenCorner.y, (float)10, (float)62, mPaint);
 	   canvas.drawText("Dimensione Schermo : " + screenDim.width + "x" + screenDim.height, (float)10, (float)76, mPaint);
-	   canvas.drawText("Ultima tessera : " + x + "x" + y, (float)10, (float)90, mPaint);
+	   canvas.drawText("Ultima tessera : " + x + "x" + y, (float)10, (float)90, mPaint); */
    }
     
 
@@ -364,12 +364,12 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
 		   /* Se ci sono sovrapposizioni, sposta, se no annulla */
 		   for (int y = starty; y != endy; y+=stepy) {
 			   for (int x = startx; x != endx; x+= stepx) {
-				   if (oldZoom == tileZoom && (x + firstTile.x) >= oldTile.x && (x + firstTile.x) < (oldTile.x + tilesSize.width) &&
+				   /* if (oldZoom == tileZoom && (x + firstTile.x) >= oldTile.x && (x + firstTile.x) < (oldTile.x + tilesSize.width) &&
 						   (y + firstTile.y) >= oldTile.y && (y + firstTile.y) < (oldTile.y + tilesSize.height)) {
 					   tiles[y][x] = tiles[y + firstTile.y - oldTile.y][x + firstTile.x - oldTile.x];
-				   } else {
+				   } else { */
 					   tiles[y][x]=null;
-				   }
+				   // }
 			   }
 		   }
 		   /* Carica le tessere vuote */
@@ -384,6 +384,7 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
 		   oldZoom = tileZoom;
 		   oldTile = new Point (firstTile);
 		   loaderThread = null;
+		   Log.i("Stdout","Fine LoadTiles");
 	   }
    }
 
@@ -426,6 +427,7 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
 
    public void setTags (GeoTag tagList) {
 	   this.tagList = tagList;
+	   postInvalidate();
    }
 
    void centerPoint (double lat, double lon, int zoom) {
@@ -482,6 +484,7 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
    }
 
    void loadTiles () {
+	   Log.i("stdout", "LoadTiles (" + ((loaderThread != null) ? "Interrompo" : "Nuovo") + ")");
 	   loaderThread = new Thread(this);
 	   loaderThread.start();
    }
@@ -496,6 +499,30 @@ public class OsmBrowser extends View implements Runnable, OnSeekBarChangeListene
 		   firstTile.x --;
 	   }
 	   loadTiles ();
+   }
+   
+   //lat	lon	title	description	iconSize	iconOffset	icon
+   // 5193501.5396258	1601689.3235986	AnxaLug	<a href="http://www.anxalug.org/">http://www.anxalug.org/</a>	16,19	-8,-19	http://lugmap.it/images/icon.png
+   public static String[] tabParser (String csv) {
+	   ArrayList<String> found = new ArrayList<String>();
+	   StringBuilder s = new StringBuilder();
+	   for (int i = 0; i < csv.length(); i++) {
+		   if (csv.charAt(i) == '\t') {      // Separator
+			   found.add(s.toString());
+			   s = new StringBuilder();
+		   } else {
+			   while (i<csv.length() && csv.charAt(i)!='\t') {
+				   s.append(csv.charAt(i++));
+			   }
+			   if (i<csv.length() && csv.charAt(i)=='\t') {
+				   i--;
+			   }
+		   }
+	   }
+	   found.add(s.toString());
+	   String[] res = new String[found.size()];
+	   res = found.toArray(res);
+	   return res;
    }
 
    public static String[] csvParser (String csv) {

@@ -30,6 +30,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -82,8 +83,14 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
         mOsmBrowser.setZoomBar((SeekBar) findViewById(R.id.zoomBar));
         
         greeting = new Greeting(mOsmBrowser.getContext(), false);
-        greetingTimer = new Thread(this);
-        greetingTimer.start();
+        
+        Handler handler = new Handler();
+        handler.postDelayed(
+            new Runnable() {
+                public void run() {
+                    greeting.close();
+                }
+            }, 10000L);
 
         loadTags = new Thread(this);
         loadTags.start();
@@ -297,14 +304,6 @@ public class LinuxDayOSMActivity extends Activity implements Runnable  {
 
 	@Override
 	public void run() {
-		if (Thread.currentThread() == greetingTimer) {
-			try {
-				Thread.sleep(10000);
-			} catch (Exception e) {
-			}
-			greeting.close();
-			greeting=null;
-		}
 		if (Thread.currentThread() == loadTags) {
 			// mOsmBrowser.setTags(new LDTag(null, titles, LugManCSV, getResources()));
 			GeoTag taglist = null;

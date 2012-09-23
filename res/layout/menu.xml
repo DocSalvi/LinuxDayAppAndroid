@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ menu.xml
+ LinuxDayOSM
+ Copyright (C) Stefano Salvi 2012 <stefano@salvi.mn.it>
+
+ LinuxDayOSM is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ LinuxDayOSM is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Single menu item
+         Set id, icon and Title for each menu item
+    -->
+    <item android:id="@+id/menu_full"
+          android:icon="@drawable/icon_italy"
+          android:title="Italia intera" />
+ 
+    <item android:id="@+id/menu_center"
+          android:icon="@drawable/icon_target"
+          android:title="Centra tua posizione" />
+
+    <item android:id="@+id/menu_info"
+          android:icon="@drawable/icon_info"
+          android:title="Informazioni" />
+</menu>

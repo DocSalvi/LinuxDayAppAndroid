@@ -1,5 +1,6 @@
 # built application files
-*.apk
+## Mantengo l'APK nel Git per facilitare la distribuzione
+## *.apk
 *.ap_
 
 # files for the dex VM
@@ -9,7 +10,7 @@
 *.class
 
 # generated files
-bin/
+## bin/ In BIN vanno gli APK da testare
 gen/
 lib/
 build.xml
@@ -18,6 +19,7 @@ build.xml
 local.properties
 
 # Personal additions
-.classpath
-.project
+## Lascio Classpath e project, così se si scarica si riesce ad importare in Eclipse
+## .classpath
+## .project
 .settings/

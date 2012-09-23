@@ -44,9 +44,13 @@ import android.widget.SeekBar;
 public class LinuxDayOSMActivity extends Activity  {
 	/*
 	 * BusinessMap:
-	 * https://github.com/madbob/BusinessMap/tree/master/db
+http://businessmap.it/dati_networking.txt
+http://businessmap.it/dati_sviluppo.txt
+http://businessmap.it/dati_web.txt
+http://businessmap.it/dati_formazione.txt
+http://businessmap.it/dati_consulenza.txt
 	 * Calendar:
-	 * https://raw.github.com/Gelma/LugMap/lugmap.it/forge/events/2012.txt
+http://calendar.lugmap.it/forge/events/geoevents.txt
 	 */
 
     static final String CSVTitles = "\"Organizzatore\",\"Luogo\",\"Indirizzo\",\"Città\",\"Provincia\",\"Sito Web\",\"Longitudine\",\"Latitudine\"";
@@ -227,8 +231,8 @@ public class LinuxDayOSMActivity extends Activity  {
     }
 
     private void centerItaly () {
-       mOsmBrowser.centerArea(topLatItaly, leftLonItaly, bottomLatItaly, righrLonItaly);
-   }
+    	mOsmBrowser.centerArea(topLatItaly, leftLonItaly, bottomLatItaly, righrLonItaly);
+    }
 
     
     // Initiating Menu XML file (menu.xml)
@@ -264,6 +268,10 @@ public class LinuxDayOSMActivity extends Activity  {
     		
     	case R.id.menu_info:
     		new Greeting(mOsmBrowser.getContext(), true);
+    		return true;
+    		
+    	case R.id.menu_select:
+    		new SelectLists(mOsmBrowser);
     		return true;
 
     	default:
@@ -379,6 +387,78 @@ public class LinuxDayOSMActivity extends Activity  {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new LMTag(taglist, titles, str, getResources());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			url = new URL(getResources().getString(R.string.BMNetRepositoryName));
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			str = in.readLine().trim();
+			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			while ((str = in.readLine()) != null) {
+				// System.out.println(str);
+				try {   // Per intercettare gli errori di parsing delle coordinate
+					taglist = new BMNetTag(taglist, titles, str, getResources());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			url = new URL(getResources().getString(R.string.BMDevRepositoryName));
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			str = in.readLine().trim();
+			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			while ((str = in.readLine()) != null) {
+				// System.out.println(str);
+				try {   // Per intercettare gli errori di parsing delle coordinate
+					taglist = new BMDevTag(taglist, titles, str, getResources());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			url = new URL(getResources().getString(R.string.BMWebRepositoryName));
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			str = in.readLine().trim();
+			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			while ((str = in.readLine()) != null) {
+				// System.out.println(str);
+				try {   // Per intercettare gli errori di parsing delle coordinate
+					taglist = new BMWebTag(taglist, titles, str, getResources());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			url = new URL(getResources().getString(R.string.BMEduRepositoryName));
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			str = in.readLine().trim();
+			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			while ((str = in.readLine()) != null) {
+				// System.out.println(str);
+				try {   // Per intercettare gli errori di parsing delle coordinate
+					taglist = new BMEduTag(taglist, titles, str, getResources());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			url = new URL(getResources().getString(R.string.BMPrjRepositoryName));
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			str = in.readLine().trim();
+			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			while ((str = in.readLine()) != null) {
+				// System.out.println(str);
+				try {   // Per intercettare gli errori di parsing delle coordinate
+					taglist = new BMPrjTag(taglist, titles, str, getResources());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			url = new URL(getResources().getString(R.string.CalendarRepositoryName));
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			str = in.readLine().trim();
+			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			while ((str = in.readLine()) != null) {
+				// System.out.println(str);
+				try {   // Per intercettare gli errori di parsing delle coordinate
+					taglist = new CalendarTag(taglist, titles, str, getResources());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

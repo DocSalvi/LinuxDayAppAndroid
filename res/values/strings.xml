@@ -30,6 +30,12 @@
     <string name="RepositoryName">http://www.linuxday.it/data/</string>
     <string name="RepositoryNameOld">http://www.linuxday.it/2011/data/</string>
     <string name="LugMapRepositoryName">http://lugmap.it/dati.txt</string>
+    <string name="BMNetRepositoryName">http://businessmap.it/dati_networking.txt</string>
+    <string name="BMDevRepositoryName">http://businessmap.it/dati_sviluppo.txt</string>
+    <string name="BMWebRepositoryName">http://businessmap.it/dati_web.txt</string>
+    <string name="BMEduRepositoryName">http://businessmap.it/dati_formazione.txt</string>
+    <string name="BMPrjRepositoryName">http://businessmap.it/dati_consulenza.txt</string>
+    <string name="CalendarRepositoryName">http://calendar.lugmap.it/forge/events/geoevents.txt</string>
     <string name="ILSref"><![CDATA[<h1>ITALIAN LINUX SOCIETY</h1>http://www.linux.it]]></string>
     <string name="GreetingText"><![CDATA[<h2>LinuxDayApp</h2>
         <b>Autore:</b> Stefano Salvi mailto:<u>stefano.salvi@linux.it</u><br/>Rilasciato con licenza <b>GPL</b>: <u>http://www.gnu.org/licenses/gpl.html</u><br />

@@ -18,10 +18,15 @@
  */
 package it.mn.salvi.linuxDayOSM;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.text.Spanned;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public abstract class GeoTag {
   protected GeoTag next;
@@ -80,6 +85,27 @@ public abstract class GeoTag {
 			  canvas.drawBitmap(i.getIcon(), x, y, paint);
 		  }
 	  }
+  }
+  
+  protected void infoDialog (Context context, String title, Spanned content) {
+	  final Dialog dialog = new Dialog(context);
+	  dialog.setContentView(R.layout.ld_dialog_layout);
+	  dialog.setTitle(title);
+
+	  TextView text = (TextView) dialog.findViewById(R.id.content);
+	  text.setText(content);
+
+	  Button dialogButton = (Button) dialog.findViewById(R.id.close);
+	  // if button is clicked, close the custom dialog
+	  dialogButton.setOnClickListener(new View.OnClickListener() {
+		  @Override
+		  public void onClick(View v) {
+			  dialog.dismiss();
+		  }
+	  });
+
+	  dialog.show();
+
   }
 
   abstract public void action (Context context, Point p);

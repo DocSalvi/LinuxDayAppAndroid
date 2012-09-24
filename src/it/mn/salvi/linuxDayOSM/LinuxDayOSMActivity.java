@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -352,6 +353,9 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 		// mOsmBrowser.setTags(new LDTag(null, titles, LugManCSV, getResources()));
 		GeoTag taglist = null;
 		try {
+			boolean firstElement = true;
+			SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+
 			URL url = null;
 			// URL url = new URL("http://www.linuxday.it/2011/data/");
 			try {
@@ -372,6 +376,10 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 						// System.out.println(str);
 						try {   // Per intercettare gli errori di parsing delle coordinate
 							taglist = new LDTag(taglist, titles, str, getResources());
+							if (firstElement) {
+								taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+								firstElement=false;	
+							}
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -383,10 +391,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 			String str = in.readLine().trim();
 			String titles[] = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new LMTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -395,10 +408,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
 			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMNetTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -407,10 +425,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
 			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMDevTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -419,10 +442,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
 			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMWebTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -431,10 +459,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
 			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMEduTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -443,10 +476,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
 			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMPrjTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -455,10 +493,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
 			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
+			firstElement = true;
 			while ((str = in.readLine()) != null) {
 				// System.out.println(str);
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new CalendarTag(taglist, titles, str, getResources());
+					if (firstElement) {
+						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						firstElement=false;	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

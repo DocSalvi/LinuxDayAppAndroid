@@ -282,10 +282,12 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 	   int scale = 1 << (18 - tileZoom);
 	   // Log.i("Stdout", "TileZoom " + tileZoom + "Scale " + scale);
 	   for (GeoTag t = tagList; t != null; t = t.getNext()) {
-		   if (t.getDescription() != null && !descs.contains(t.getDescription())) {
-			   descs.add(t.getDescription());
+		   if (t.isActive()) {
+			   if (t.getDescription() != null && !descs.contains(t.getDescription())) {
+				   descs.add(t.getDescription());
+			   }
+			   t.paint(canvas, mPaint, absTopLeft, absBottomRight, scale);
 		   }
-		   t.paint(canvas, mPaint, absTopLeft, absBottomRight, scale);
 	   }
 	   x=TOP;
 	   y=LEFT;

@@ -118,10 +118,7 @@ public class LDTag extends GeoTag {
 
   @Override
   public TagDescription getDescription() {
-	  if (isActive()) {
-		  return description;
-	  }
-	  return null;
+	  return description;
   }
 
   @Override

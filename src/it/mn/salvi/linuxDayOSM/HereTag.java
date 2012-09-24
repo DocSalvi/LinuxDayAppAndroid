@@ -32,14 +32,14 @@ public class HereTag extends GeoTag {
     
 	  if (icons[0] == null) {
 		  try {
-			  icons[0] = new PositionIcon(new Dimension(20,20), new Point (10,10), BitmapFactory.decodeResource(res,R.drawable.icon_target_small));
+			  icons[0] = new PositionIcon(new Dimension(20,20), new Point (10,10), BitmapFactory.decodeResource(res,R.drawable.target_icon));
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }
 	  }
 	  if (icons[1] == null) {
 		  try {
-			  icons[1] = new PositionIcon(new Dimension(30,30), new Point (14,14), BitmapFactory.decodeResource(res,R.drawable.icon_target_wide));
+			  icons[1] = new PositionIcon(new Dimension(30,30), new Point (14,14), BitmapFactory.decodeResource(res,R.drawable.target_icon_wide));
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }

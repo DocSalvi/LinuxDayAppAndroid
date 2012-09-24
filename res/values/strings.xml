@@ -44,8 +44,15 @@
     <string name="LogoDescription">Logo del LinuxDay</string>
     <string name="LinuxDayDate">LinuxDay 2012 – 27 Ottobre</string>
     <string name="LinuxDayDescription">Linux Day</string>
-    <string name="LugDescription">Linux User Gtoup</string>
+    <string name="LugDescription">Linux User Group</string>
     <string name="HereDescription">La tua posizione</string>
+    <string name="BMNetDescription">Business Map – Networking</string>
+    <string name="BMDevDescription">Business Map – Sviluppo Software</string>
+    <string name="BMWebDescription">Business Map – Web</string>
+    <string name="BMEduDescription">Business Map – Formazione</string>
+    <string name="BMPrjDescription">Business Map – Consilenza</string>
+    <string name="CalendarDescription">Calendario Eventi</string>
+    <string name="CalendarDescriptionOld">Calendario Eventi - Passati</string>
     <string name="LinuxDayDialog"><![CDATA[<p><b>Organizzazione: </b>%1$s</p><p><b>Luogo: </b>%2$s</b><p><b>Indirizzo: </b>%3$s</p><p><b>Città: </b>%4$s</p><p><b>Sito WEB: </b>%5$s</p>]]></string>
     <string name="LugDialog"><![CDATA[<p><b>Organizzazione: </b>%1$s</p><p><b>Sito WEB: </b>%2$s</p>]]></string>
     <color name="lightgrey">#cccccc</color>

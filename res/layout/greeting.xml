@@ -21,47 +21,64 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/lightgrey"
-    android:textColor="@color/black"
-     >
+    android:textColor="@color/black" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="22dp"
-        android:contentDescription="@string/LogoDescription"
-        android:src="@drawable/linuxday" />
-
-    <TextView
-        android:id="@+id/ILS"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/imageView1"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/imageView1"
-        android:layout_toRightOf="@+id/imageView1"
-        android:autoLink="web"
-        android:gravity="center"
-        android:text="@string/ILSref"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black" />
-
-    <TextView
-        android:id="@+id/info"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/close"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/imageView1"
-        android:autoLink="web|email"
-        android:gravity="center"
-        android:text="@string/GreetingText"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/black" />
+        android:layout_alignParentTop="true" >
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
+            android:textColor="@color/black" >
+
+            <ImageView
+                android:id="@+id/LDLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="22dp"
+                android:contentDescription="@string/LogoDescription"
+                android:src="@drawable/linuxday" />
+
+            <TextView
+                android:id="@+id/ILS"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/info"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/LDLogo"
+                android:autoLink="web"
+                android:gravity="center"
+                android:text="@string/ILSref"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/LDLogo"
+                android:autoLink="web|email"
+                android:gravity="center"
+                android:text="@string/GreetingText"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/close"

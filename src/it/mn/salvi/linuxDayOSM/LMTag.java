@@ -75,16 +75,8 @@ public class LMTag extends BaseLMTag {
   }
 
   @Override
-  public boolean canDisable() {
-	return true;
-  }
-
-  @Override
   public TagDescription getDescription() {
-	  if (isActive()) {
-		  return description;
-	  }
-	  return null;
+	  return description;
   }
 
   @Override

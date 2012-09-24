@@ -71,14 +71,14 @@ public class CalendarTag extends BaseLMTag {
 				e.printStackTrace();
 			}
 		}
-		if (icons[0] == null) {
+		if (icons[2] == null) {
 			try {
 				icons[2] = new PositionIcon(new Dimension(16,19), new Point (8,19), BitmapFactory.decodeResource(res,R.drawable.calendar_old_icon));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		if (icons[1] == null) {
+		if (icons[3] == null) {
 			try {
 				icons[3] = new PositionIcon(new Dimension(30,36), new Point (14,36), BitmapFactory.decodeResource(res,R.drawable.calendar_old_icon_wide));
 			} catch (Exception e) {
@@ -94,7 +94,7 @@ public class CalendarTag extends BaseLMTag {
 		}
 		if (descriptionOld == null) {
 			try {
-				descriptionOld = new TagDescription(res.getString(R.string.CalendarDescriptionOld), icons[0]);
+				descriptionOld = new TagDescription(res.getString(R.string.CalendarDescriptionOld), icons[2]);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

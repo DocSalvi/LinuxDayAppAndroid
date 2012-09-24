@@ -11,6 +11,8 @@
 
 # generated files
 ## bin/ In BIN vanno gli APK da testare
+bin/res/
+bin/classes/
 gen/
 lib/
 build.xml

@@ -21,6 +21,7 @@ package it.mn.salvi.linuxDayOSM;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.text.Spanned;
@@ -57,8 +58,14 @@ public abstract class GeoTag {
   public boolean isHit (Point absolute, int scale) {
 	PositionIcon i = getIconScale(scale);
 	if (i != null) {
-      return absolute.x >= (absolutePos.x - i.getRefPoint().x * scale) && absolute.x < (absolutePos.x + (i.getSize().width - i.getRefPoint().x) * scale) &&
-        absolute.y >= (absolutePos.y - i.getRefPoint().y * scale) && absolute.y < (absolutePos.y + (i.getSize().height - i.getRefPoint().y) * scale);
+		if (absolute.x >= (absolutePos.x - i.getRefPoint().x * scale) && absolute.x < (absolutePos.x + (i.getSize().width - i.getRefPoint().x) * scale) &&
+			absolute.y >= (absolutePos.y - i.getRefPoint().y * scale) && absolute.y < (absolutePos.y + (i.getSize().height - i.getRefPoint().y) * scale)) {
+			int x = (absolute.x - absolutePos.x) / scale + i.getRefPoint().x;
+			int y = (absolute.y - absolutePos.y) / scale + i.getRefPoint().y;
+			int alpha = Color.alpha(i.getIcon().getPixel(x, y));
+			return alpha > 128;
+		}
+        return false;
 	}
 	return false;
   }

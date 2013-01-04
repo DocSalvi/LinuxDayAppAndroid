@@ -38,14 +38,14 @@ public class BMPrjTag extends BaseLMTag {
 	  protected void init (Resources res) {
 		  if (icons[0] == null) {
 			  try {
-				  icons[0] = new PositionIcon(new Dimension(16,19), new Point (8,19), BitmapFactory.decodeResource(res,R.drawable.bmprj_logo));
+				  icons[0] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.bmprj_logo));
 			  } catch (Exception e) {
 				  e.printStackTrace();
 			  }
 		  }
 		  if (icons[1] == null) {
 			  try {
-				  icons[1] = new PositionIcon(new Dimension(30,36), new Point (14,36), BitmapFactory.decodeResource(res,R.drawable.bmprj_logo_wide));
+				  icons[1] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.bmprj_logo_wide));
 			  } catch (Exception e) {
 				  e.printStackTrace();
 			  }

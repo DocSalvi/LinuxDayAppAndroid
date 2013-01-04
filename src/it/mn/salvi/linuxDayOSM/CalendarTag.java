@@ -59,28 +59,28 @@ public class CalendarTag extends BaseLMTag {
 	protected void init (Resources res) {
 		if (icons[0] == null) {
 			try {
-				icons[0] = new PositionIcon(new Dimension(16,19), new Point (8,19), BitmapFactory.decodeResource(res,R.drawable.calendar_icon));
+				icons[0] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.calendar_icon));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		if (icons[1] == null) {
 			try {
-				icons[1] = new PositionIcon(new Dimension(30,36), new Point (14,36), BitmapFactory.decodeResource(res,R.drawable.calendar_icon_wide));
+				icons[1] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.calendar_icon_wide));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		if (icons[2] == null) {
 			try {
-				icons[2] = new PositionIcon(new Dimension(16,19), new Point (8,19), BitmapFactory.decodeResource(res,R.drawable.calendar_old_icon));
+				icons[2] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.calendar_old_icon));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		if (icons[3] == null) {
 			try {
-				icons[3] = new PositionIcon(new Dimension(30,36), new Point (14,36), BitmapFactory.decodeResource(res,R.drawable.calendar_old_icon_wide));
+				icons[3] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.calendar_old_icon_wide));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

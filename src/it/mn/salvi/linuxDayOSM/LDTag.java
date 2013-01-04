@@ -75,14 +75,14 @@ public class LDTag extends GeoTag {
   private void init (Resources res) {
 	  if (icons[0] == null) {
 		  try {
-			  icons[0] = new PositionIcon(new Dimension(20,24), new Point (10,24), BitmapFactory.decodeResource(res,R.drawable.ld_icon));
+			  icons[0] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.ld_icon));
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }
 	  }
 	  if (icons[1] == null) {
 		  try {
-			  icons[1] = new PositionIcon(new Dimension(30,36), new Point (14,36), BitmapFactory.decodeResource(res,R.drawable.ld_icon_wide));
+			  icons[1] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.ld_icon_wide));
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }

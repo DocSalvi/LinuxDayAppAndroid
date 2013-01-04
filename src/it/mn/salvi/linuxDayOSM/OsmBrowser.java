@@ -59,6 +59,7 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
     static final int SPACE = 3;
 
     Thread loaderThread;
+	private ArrayList<TagDescription> descs;
     private AsyncTask<String, Void, String> loaderTask = null;
 
     GeoTag tagList = null;
@@ -125,6 +126,7 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
         loadTiles ();
         mScaleDetector = new ScaleGestureDetector(context, this);
         mDetector = new GestureDetector(context, this);
+        descs = new ArrayList<TagDescription>();
 
         System.out.println ("Dimensione " + tilesSize.width + "X" + tilesSize.height + " tessere");
 
@@ -265,7 +267,7 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
    public void onDraw(Canvas canvas) {
 	   int x = 0;
 	   int y = 0;
-	   ArrayList<TagDescription> descs = new ArrayList<TagDescription>();
+	   descs.clear();
 	   super.onDraw(canvas);
 	   for (y = (screenCorner.y-tileSize+1)/tileSize; (y * tileSize - screenCorner.y) < screenDim.height; y++) {
 		   for (x = (screenCorner.x-tileSize+1)/tileSize; (x * tileSize - screenCorner.x) < screenDim.width; x++) {
@@ -562,7 +564,7 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
     	   /* Carica le tessere vuote */
     	   for (int y = 0; y < tilesSize.height /* && this == loaderTask */; y++) {
     		   for (int x = 0; x < tilesSize.width /* && this == loaderTask */; x++) {
-    			   if ((tiles[y][x] = loadTile (firstTile.x + x, firstTile.y + y, tileZoom, maxTiles)) != null) {
+    			   if (y < tiles.length && x < tiles[y].length && (tiles[y][x] = loadTile (firstTile.x + x, firstTile.y + y, tileZoom, maxTiles)) != null) {
     				   postInvalidate();
     			   }
     		   }

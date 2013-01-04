@@ -26,9 +26,10 @@ public class PositionIcon {
 	  private Point refPoint;
 	  private Bitmap icon;
 
-	  public PositionIcon (Dimension size, Point refPoint, Bitmap icon) {
-		  this.size = size;
-		  this.refPoint = refPoint;
+	  public PositionIcon (double horPos, double vertPos, Bitmap icon) {
+		  
+		  size = new Dimension(icon.getWidth(), icon.getHeight());
+		  refPoint = new Point((int) (size.width*horPos), (int)(size.height*vertPos));
 		  this.icon = icon;		  
 	  }
 	  

@@ -238,7 +238,7 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 			Point abs = screenToAbsolutePixel(p);
 			GeoTag clicked=null;
 			int scale = 1 << (18 - tileZoom);
-			Log.i("OsmBrowser", "onSingleTapUp " + p.x + "," + p.y + " " + abs.x + "," + abs.y + " - " + scale);
+			// Log.i("OsmBrowser", "onSingleTapUp " + p.x + "," + p.y + " " + abs.x + "," + abs.y + " - " + scale);
 			for (GeoTag current=tagList; current!=null; current = current.getNext()) {
 				if (current.isHit(abs, scale)) {
 					clicked = current;

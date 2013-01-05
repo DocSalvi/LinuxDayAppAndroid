@@ -19,6 +19,7 @@
 package it.mn.salvi.linuxDayOSM;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -86,5 +87,10 @@ public class HereTag extends GeoTag {
 		level = icons.length - 1;
 	}
 	return icons[level];
+  }
+
+  @Override
+  public void initWithPreferences(SharedPreferences preferences) {
+	  description.initWithPreferences(preferences);
   }
 }

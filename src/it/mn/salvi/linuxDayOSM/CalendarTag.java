@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -32,30 +33,16 @@ public class CalendarTag extends BaseLMTag {
 	private static TagDescription descriptionOld = null;
 	private static PositionIcon[] icons = new PositionIcon[4];
 	private boolean old;
+	private String data;
 
 	//lat	lon	title	description	iconSize	iconOffset	icon
 	// 5193501.5396258	1601689.3235986	AnxaLug	<a href="http://www.anxalug.org/">http://www.anxalug.org/</a>	16,19	-8,-19	http://lugmap.it/images/icon.png
 	public CalendarTag (GeoTag next, String[] titles, String record, Resources res) throws Exception {
 		super(next, titles, record, res);
-		Calendar c = Calendar.getInstance(); 
-		int monthNow = c.get(Calendar.MONTH) + 1;
-		int dayNow = c.get(Calendar.DAY_OF_MONTH);
-		// DD/MM
-		old = false;
-		Pattern p = Pattern.compile("([0-9.]*)/([0-9.]*)");
-		Matcher m = p.matcher(organizzazione);
-		// System.out.println("Coordinate : " + fields[6] + " Pattern trovato " + m.matches());
-		if (m.matches()) {
-			int month = Integer.parseInt(m.group(2));
-			int day = Integer.parseInt(m.group(1));
-			if (month < monthNow || (month == monthNow && day < dayNow)) {
-				old = true;
-			}
-		}
 	}
 
 	@Override
-	protected void init (Resources res) {
+	protected void init (Resources res, String[] fields) {
 		if (icons[0] == null) {
 			try {
 				icons[0] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.calendar_icon));
@@ -93,21 +80,63 @@ public class CalendarTag extends BaseLMTag {
 		}
 		if (descriptionOld == null) {
 			try {
-				descriptionOld = new TagDescription(res.getString(R.string.CalendarDescriptionOld), icons[2], "CalendarTag");
+				descriptionOld = new TagDescription(res.getString(R.string.CalendarDescriptionOld), icons[2], "CalendarTagOld");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		titleId = R.string.CalendarTitle;
+		msgStringId = R.string.CalendarDialog;
+		Pattern p = Pattern.compile(".*href=\"([^\"]*)\".*>([^<]*)<.*");
+		Matcher m = p.matcher(fields[3]);		
+		if (m.matches()) {
+			sito = m.group(1);
+			organizzazione = m.group(2);
+		} else {
+			organizzazione = "Non riesco a capire l'indirizzo del sito";
+		}
+		data = fields[2];
+		Calendar c = Calendar.getInstance(); 
+		int monthNow = c.get(Calendar.MONTH) + 1;
+		int dayNow = c.get(Calendar.DAY_OF_MONTH);
+		// DD/MM
+		old = false;
+		p = Pattern.compile("([0-9.]*)/([0-9.]*)");
+		m = p.matcher(data);
+		// System.out.println("Coordinate : " + fields[6] + " Pattern trovato " + m.matches());
+		if (m.matches()) {
+			int month = Integer.parseInt(m.group(2));
+			// mancando l'anno, Bisogna gestire il mese in maniera "circolare"...
+			// Se il mese è precedente di almeno 6 mesi, aggiungo un'anno
+			// Se invece è successivo di almeno 6 mesi, tolgo un anno
+			if (month <= monthNow - 6) {
+				month += 12;
+			} else if (month >= monthNow + 6) {
+				month -= 12;
+			}
+			int day = Integer.parseInt(m.group(1));
+			if (month < monthNow || (month == monthNow && day < dayNow)) {
+				old = true;
+			}
+			data += " " + dayNow + "/" + monthNow + " " + day + "/" + month + " Old?" + old;
+		} else {
+			data += " - Non riesc a convertirla per confrontarla";
+		}
+	}
+
+	@Override
+	protected String getDialogString (Context context) {
+		return context.getString(msgStringId, data, organizzazione, sito);
 	}
 
 	@Override
 	public void action(Context context, Point p) {
-		baseAction (context, "Lug...");
+		baseAction (context);
 	}
 
 	@Override
 	public boolean isActive() {
-		return description.isActive();
+		return (old) ? descriptionOld.isActive() : description.isActive();
 	}
 
 	@Override
@@ -117,7 +146,7 @@ public class CalendarTag extends BaseLMTag {
 
 	@Override
 	public boolean canDisable() {
-		return !old;
+		return true;
 	}
 
 	@Override
@@ -127,9 +156,18 @@ public class CalendarTag extends BaseLMTag {
 
 	@Override
 	public PositionIcon getIcon(int level) {
+		if (old) {
+			level += 2;
+		}
 		if (level >= icons.length) {
 			level = icons.length - 1;
 		}
 		return icons[level];
+	}
+
+	@Override
+	public void initWithPreferences(SharedPreferences preferences) {
+		description.initWithPreferences(preferences);
+		descriptionOld.initWithPreferences(preferences);
 	}
 }

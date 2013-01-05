@@ -45,17 +45,13 @@ public class TagDescription {
 	public void initWithPreferences (SharedPreferences preferences) {
 		this.preferences = preferences;
 		active = preferences.getBoolean(tagClassName, true);
-		System.out.println("Leggo la preferenza per " + tagClassName + " Valore " + active);
 	}
 	
 	public void setActive (boolean active) {
 		if (preferences != null) {
-			System.out.println("Salvo la preferenza per " + tagClassName + " Valore " + active);
 			SharedPreferences.Editor editor = preferences.edit();
 			editor.putBoolean(tagClassName, active); // value to store
 			editor.commit();
-		} else {
-			System.out.println("Mancano le preferemze, quindi non posso salvare " + tagClassName);			
 		}
 		this.active = active;
 	}

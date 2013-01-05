@@ -20,6 +20,8 @@ package it.mn.salvi.linuxDayOSM;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -57,13 +59,17 @@ public abstract class GeoTag {
 
   public boolean isHit (Point absolute, int scale) {
 	PositionIcon i = getIconScale(scale);
-	if (i != null) {
+	if (i != null && isActive()) {
 		if (absolute.x >= (absolutePos.x - i.getRefPoint().x * scale) && absolute.x < (absolutePos.x + (i.getSize().width - i.getRefPoint().x) * scale) &&
 			absolute.y >= (absolutePos.y - i.getRefPoint().y * scale) && absolute.y < (absolutePos.y + (i.getSize().height - i.getRefPoint().y) * scale)) {
 			int x = (absolute.x - absolutePos.x) / scale + i.getRefPoint().x;
 			int y = (absolute.y - absolutePos.y) / scale + i.getRefPoint().y;
-			int alpha = Color.alpha(i.getIcon().getPixel(x, y));
-			return alpha > 128;
+			Bitmap b = i.getIcon();
+			if (x >= 0 && x < b.getWidth() && y >= 0 && y < b.getHeight()) {
+				int alpha = Color.alpha(b.getPixel(x, y));
+				return alpha > 128;
+			}
+			return false;
 		}
         return false;
 	}
@@ -121,4 +127,5 @@ public abstract class GeoTag {
   abstract public boolean canDisable();
   abstract public TagDescription getDescription();
   abstract public PositionIcon getIcon(int level);
+  abstract public void initWithPreferences (SharedPreferences preferences);
 }

@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -97,7 +98,7 @@ public class LDTag extends GeoTag {
 
   @Override
   public void action(Context context, Point p) {
-	infoDialog (context, "Evento...", Html.fromHtml(context.getString(R.string.LinuxDayDialog, organizzazione, luogo, indirizzo, citta + " (" + provincia + ")", sito)));
+	infoDialog (context, "Linux Day...", Html.fromHtml(context.getString(R.string.LinuxDayDialog, organizzazione, luogo, indirizzo, citta + " (" + provincia + ")", sito)));
   }
 
   @Override
@@ -126,5 +127,10 @@ public class LDTag extends GeoTag {
 		level = icons.length - 1;
 	}
 	return icons[level];
+  }
+
+  @Override
+  public void initWithPreferences(SharedPreferences preferences) {
+	  description.initWithPreferences(preferences);
   }
 }

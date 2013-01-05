@@ -55,9 +55,16 @@
     <string name="CalendarDescriptionOld">Calendario Eventi - Passati</string>
     <string name="LinuxDayDialog"><![CDATA[<p><b>Organizzazione: </b>%1$s</p><p><b>Luogo: </b>%2$s</b><p><b>Indirizzo: </b>%3$s</p><p><b>Città: </b>%4$s</p><p><b>Sito WEB: </b>%5$s</p>]]></string>
     <string name="LugDialog"><![CDATA[<p><b>Organizzazione: </b>%1$s</p><p><b>Sito WEB: </b>%2$s</p>]]></string>
-    <color name="lightgrey">#cccccc</color>
-    <color name="black">#000000</color>
+    <string name="CalendarDialog"><![CDATA[<p><b>Data: </b>%1$s</p><p><b>Evento: </b>%2$s</p><p><b>Sito WEB: </b>%3$s</p>]]></string>
     <string name="CloseLegendaDescription">Chiudi la legenda</string>
     <string name="open_legenda_description">Apri la Legenda</string>
-    
+    <string name="LugTitle">Linux Users Group &#8230;</string>
+    <string name="BMDevTitle">Sviluppo sotto Linux &#8230;</string>
+    <string name="BMEduTitle">Corsi su Linux &#8230;</string>
+    <string name="BMNetTitle">Connettività con Linux &#8230;</string>
+    <string name="BMPrjTitle">Consulenza su Linux &#8230;</string>
+    <string name="BMWebTitle">Siti Web con Linux &#8230;</string>
+    <string name="CalendarTitle">Evento &#8230;</string>
+    <color name="lightgrey">#cccccc</color>
+    <color name="black">#000000</color>
 </resources>

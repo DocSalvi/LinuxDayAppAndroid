@@ -20,6 +20,7 @@ package it.mn.salvi.linuxDayOSM;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 
 import android.app.Activity;
@@ -27,6 +28,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -351,180 +353,63 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
     	super.onPause();
     }
     
-    private void loadTags () {
-		// mOsmBrowser.setTags(new LDTag(null, titles, LugManCSV, getResources()));
-		GeoTag taglist = null;
+    private GeoTag loadTagsCategory (GeoTag taglist, SharedPreferences preferences, boolean isCvs, int repo, int repoOld, Class<?> tag) {
 		try {
 			boolean firstElement = true;
-			SharedPreferences preferences = getPreferences(MODE_PRIVATE);
 
 			URL url = null;
 			// URL url = new URL("http://www.linuxday.it/2011/data/");
 			try {
-				url = new URL(getResources().getString(R.string.RepositoryName));
+				url = new URL(getResources().getString(repo));
 			} catch (Exception e) {
-				try {
-					url = new URL(getResources().getString(R.string.RepositoryName));
-				} catch (Exception e1) {
-					url = null;
+				if (repoOld != 0) {
+					try {
+						url = new URL(getResources().getString(repoOld));
+					} catch (Exception e1) {
+						url = null;
+					}
+				} else {
+					url = null;					
 				}
 			}
 			if (url != null) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 				String str = in.readLine().trim();
-				String titles[] = OsmBrowser.csvParser(str);    // La prima linea sono i titoli
+				String titles[] = (isCvs) ? OsmBrowser.csvParser(str) : OsmBrowser.tabParser(str);    // La prima linea sono i titoli
 				while ((str = in.readLine()) != null) {
 					if (!str.startsWith("\"\",")) { // Salta le linee vuote
 						// System.out.println(str);
 						try {   // Per intercettare gli errori di parsing delle coordinate
-							taglist = new LDTag(taglist, titles, str, getResources());
+							// taglist = new LDTag(taglist, titles, str, getResources());
+							Constructor<?> ctor = tag.getConstructor(GeoTag.class, String[].class, String.class, Resources.class);
+							taglist = (GeoTag) ctor.newInstance(taglist, titles, str, getResources());
 							if (firstElement) {
-								taglist.getDescription().initWithPreferences(preferences);
+								taglist.initWithPreferences(preferences);
 								firstElement=false;	
 							}
+							mOsmBrowser.setTags(taglist);   	
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				}
 			}
-			mOsmBrowser.setTags(taglist);
-			
-			url = new URL(getResources().getString(R.string.LugMapRepositoryName));
-			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-			String str = in.readLine().trim();
-			String titles[] = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new LMTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			mOsmBrowser.setTags(taglist);
-
-			url = new URL(getResources().getString(R.string.BMNetRepositoryName));
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-			str = in.readLine().trim();
-			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new BMNetTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			mOsmBrowser.setTags(taglist);
-
-			url = new URL(getResources().getString(R.string.BMDevRepositoryName));
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-			str = in.readLine().trim();
-			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new BMDevTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			mOsmBrowser.setTags(taglist);
-
-			url = new URL(getResources().getString(R.string.BMWebRepositoryName));
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-			str = in.readLine().trim();
-			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new BMWebTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			mOsmBrowser.setTags(taglist);
-
-			url = new URL(getResources().getString(R.string.BMEduRepositoryName));
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-			str = in.readLine().trim();
-			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new BMEduTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			mOsmBrowser.setTags(taglist);
-
-			url = new URL(getResources().getString(R.string.BMPrjRepositoryName));
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-			str = in.readLine().trim();
-			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new BMPrjTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			mOsmBrowser.setTags(taglist);
-
-			url = new URL(getResources().getString(R.string.CalendarRepositoryName));
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-			str = in.readLine().trim();
-			titles = OsmBrowser.tabParser(str);    // La prima linea sono i titoli
-			firstElement = true;
-			while ((str = in.readLine()) != null) {
-				// System.out.println(str);
-				try {   // Per intercettare gli errori di parsing delle coordinate
-					taglist = new CalendarTag(taglist, titles, str, getResources());
-					if (firstElement) {
-						taglist.getDescription().initWithPreferences(preferences);
-						firstElement=false;	
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-			mOsmBrowser.setTags(taglist);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return taglist;
+    }
+    
+    private void loadTags () {
+		GeoTag taglist = null;
+		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+		taglist = loadTagsCategory (taglist, preferences, true, R.string.RepositoryName, R.string.RepositoryNameOld, LDTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.LugMapRepositoryName, 0, LMTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMNetRepositoryName, 0, BMNetTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMDevRepositoryName, 0, BMDevTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMWebRepositoryName, 0, BMWebTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMEduRepositoryName, 0, BMEduTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMPrjRepositoryName, 0, BMPrjTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.CalendarRepositoryName, 0, CalendarTag.class);
     }
 }

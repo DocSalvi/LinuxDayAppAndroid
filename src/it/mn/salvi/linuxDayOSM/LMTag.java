@@ -19,6 +19,7 @@
 package it.mn.salvi.linuxDayOSM;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -34,7 +35,7 @@ public class LMTag extends BaseLMTag {
   }
 
   @Override
-  protected void init (Resources res) {
+  protected void init (Resources res, String[] fields) {
 	  if (icons[0] == null) {
 		  try {
 			  icons[0] = new PositionIcon(0.5, 1.0, BitmapFactory.decodeResource(res,R.drawable.lm_icon));
@@ -60,7 +61,7 @@ public class LMTag extends BaseLMTag {
 
   @Override
   public void action(Context context, Point p) {
-	  baseAction (context, "Lug...");
+	  baseAction (context);
   }
 
   @Override
@@ -84,5 +85,10 @@ public class LMTag extends BaseLMTag {
 		level = icons.length - 1;
 	}
 	return icons[level];
+  }
+
+  @Override
+  public void initWithPreferences(SharedPreferences preferences) {
+	  description.initWithPreferences(preferences);
   }
 }

@@ -28,10 +28,6 @@
     <item android:id="@+id/menu_center"
           android:icon="@drawable/icon_target"
           android:title="Centra la tua posizione" />
-
-    <item android:id="@+id/menu_select"
-          android:icon="@drawable/icon_checkmarks"
-          android:title="Seleziona Eventi" />
     
     <item android:id="@+id/menu_info"
           android:icon="@drawable/icon_info"

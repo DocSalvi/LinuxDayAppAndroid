@@ -274,10 +274,6 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
     	case R.id.menu_info:
     		new Greeting(mOsmBrowser.getContext(), true);
     		return true;
-    		
-    	case R.id.menu_select:
-    		new SelectLists(mOsmBrowser);
-    		return true;
 
     	default:
     		return super.onOptionsItemSelected(item);

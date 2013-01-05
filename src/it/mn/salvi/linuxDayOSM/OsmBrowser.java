@@ -46,15 +46,14 @@ import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.ZoomControls;
 
 /**
  * @author salvi
  *
  */
 
-public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScaleGestureListener, OnGestureListener {
+public class OsmBrowser extends View implements OnScaleGestureListener, OnGestureListener {
     static final int tileSize = 256;
     static final int TOP = 5;
     static final int LEFT = 5;
@@ -85,7 +84,7 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
     private Bitmap[][] tiles;
 
     private Paint mPaint;
-    private SeekBar mZoomBar;
+    private ZoomControls mZoomControls;
     
     private String tilesDir;
     
@@ -109,10 +108,40 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
         osmInitialyze(context, attrs);
     }
 
-    void setZoomBar (SeekBar mZoomBar) {
-        this.mZoomBar = mZoomBar;
-        mZoomBar.setOnSeekBarChangeListener(this);
-        mZoomBar.setProgress(tileZoom-2);
+    void setZoomButtons (ZoomControls mZoomControls) {
+        this.mZoomControls = mZoomControls;
+        mZoomControls.setOnZoomInClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (tileZoom < 18) {
+					startDrag = new Point (screenDim.width/2, screenDim.height/2);
+					startAbsolutePixel = screenToAbsolutePixel(startDrag);
+					tileZoom ++;
+					if (tileZoom == 18) {
+						OsmBrowser.this.mZoomControls.setIsZoomInEnabled(false);
+					}
+					OsmBrowser.this.mZoomControls.setIsZoomOutEnabled(true);
+					zoomReposition();
+				}
+			}
+		});
+        mZoomControls.setOnZoomOutClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (tileZoom > 2) {
+					startDrag = new Point (screenDim.width/2, screenDim.height/2);
+					startAbsolutePixel = screenToAbsolutePixel(startDrag);
+					tileZoom --;
+					if (tileZoom == 2) {
+						OsmBrowser.this.mZoomControls.setIsZoomOutEnabled(false);
+					}
+					OsmBrowser.this.mZoomControls.setIsZoomInEnabled(true);
+					zoomReposition();
+				}
+			}
+		});
     }
 
     private void osmInitialyze (Context context, AttributeSet attrs) {
@@ -160,7 +189,8 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
         if (tileZoom > 18) {
                 tileZoom = 18;
         }
-        mZoomBar.setProgress(tileZoom-2);
+        mZoomControls.setIsZoomOutEnabled(tileZoom != 2);
+        mZoomControls.setIsZoomInEnabled(tileZoom != 18);
         if (detector.isInProgress()) {
         	postInvalidate();
         	return false;
@@ -467,23 +497,6 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 
 	}
 
-	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-		tileZoom = progress + 2;
-		postInvalidate();
-	}
-
-	@Override
-	public void onStartTrackingTouch(SeekBar seekBar) {
-		startDrag = new Point (screenDim.width/2, screenDim.height/2);
-		startAbsolutePixel = screenToAbsolutePixel(startDrag);
-	}
-
-	@Override
-	public void onStopTrackingTouch(SeekBar seekBar) {
-		zoomReposition ();
-	}
-
 	void zoomReposition () {
 		int mult = 1 << (18 - tileZoom);
 		int scaledX = (startAbsolutePixel.x / mult) - startDrag.x;
@@ -530,8 +543,9 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 		}
 		setScreenCorner (left - (firstTile.x * tileSize), top - (firstTile.y * tileSize));
 		oldZoom = 0;
-		if (mZoomBar != null) {
-			mZoomBar.setProgress(tileZoom-2);
+		if (mZoomControls != null) {
+			mZoomControls.setIsZoomInEnabled(true);
+			mZoomControls.setIsZoomOutEnabled(true);
 		}
 	}
 
@@ -555,8 +569,9 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 		firstTile.y = (top - tileSize/2)/tileSize;
 		setScreenCorner (left - (firstTile.x * tileSize), top - (firstTile.y * tileSize));
 		oldZoom = 0;
-		if (mZoomBar != null) {
-			mZoomBar.setProgress(tileZoom-2);
+		if (mZoomControls != null) {
+			mZoomControls.setIsZoomInEnabled(true);
+			mZoomControls.setIsZoomOutEnabled(true);
 		}
 		adjustAndLoad ();
 		System.out.println ("Scala X " + scaleX + "Scala Y " + scaleY + " Scala " + scale + " Livello " + tileZoom + " firsr Tile " + firstTile.x + "x" + firstTile.y + " Left Corner " + screenCorner.x + "x" + screenCorner.y);
@@ -784,5 +799,4 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 			}
 		});
 	}
-
 }

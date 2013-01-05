@@ -38,7 +38,7 @@
           	android:id="@+id/osmbrowser"
            	android:layout_width="fill_parent"
            	android:layout_height="match_parent"
-           	android:layout_alignTop="@+id/zoomBarContainer"
+           	android:layout_alignTop="@+id/zoomContainer"
            	tileSize="24" />
 
 		<ImageButton
@@ -51,21 +51,18 @@
 			android:src="@drawable/icona_legenda" />
        
         <RelativeLayout
-            android:id="@+id/zoomBarContainer"
+            android:id="@+id/zoomContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" >
 
-        	<SeekBar
-            	android:id="@+id/zoomBar"
-            	android:layout_width="fill_parent"
-            	android:layout_height="wrap_content"
-            	android:layout_alignParentLeft="true"
-            	android:layout_alignParentBottom="true"
-            	android:max="16"
-             	/>
-
+            <ZoomControls
+                android:id="@+id/zoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true" />
 
         </RelativeLayout>
 

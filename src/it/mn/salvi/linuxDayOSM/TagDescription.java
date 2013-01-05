@@ -25,6 +25,7 @@ public class TagDescription {
 	private String description;
 	private PositionIcon icon;
 	private boolean active;
+	private boolean alwaysActive;
 	private SharedPreferences preferences;
 	private String tagClassName;
 	
@@ -32,6 +33,8 @@ public class TagDescription {
 		this.description = description;
 		this.icon = icon;
 		this.tagClassName = tagClassName;
+		active = true;
+		alwaysActive = false;
 	}
 	
 	public String getDescription () {
@@ -48,7 +51,7 @@ public class TagDescription {
 	}
 	
 	public void setActive (boolean active) {
-		if (preferences != null) {
+		if (preferences != null && !alwaysActive) {
 			SharedPreferences.Editor editor = preferences.edit();
 			editor.putBoolean(tagClassName, active); // value to store
 			editor.commit();
@@ -56,7 +59,11 @@ public class TagDescription {
 		this.active = active;
 	}
 	
+	public void setAlwasActive() {
+		alwaysActive = true;
+	}
+	
 	public boolean isActive () {
-		return active;
+		return active || alwaysActive;
 	}
 }

@@ -48,6 +48,7 @@ public class HereTag extends GeoTag {
 	  if (description == null) {
 		  try {
 			  description = new TagDescription(res.getString(R.string.HereDescription), icons[0], "HereTag");
+			  description.setAlwasActive();
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }

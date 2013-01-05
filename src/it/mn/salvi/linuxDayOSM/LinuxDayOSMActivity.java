@@ -43,7 +43,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import android.widget.SeekBar;
+import android.widget.ZoomControls;
 
 public class LinuxDayOSMActivity extends Activity  {
 	/*
@@ -110,7 +110,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
     	centerItaly ();
     	String packageName =  getPackageName();
     	mOsmBrowser.setTilesDir(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + packageName + "/files/Tiles");
-    	mOsmBrowser.setZoomBar((SeekBar) findViewById(R.id.zoomBar));
+    	mOsmBrowser.setZoomButtons((ZoomControls) findViewById(R.id.zoom));
     	mOsmBrowser.setOpenLegenda((ImageButton)findViewById(R.id.open_legenda));
 
     	final ConnectivityManager connMgr = (ConnectivityManager)  

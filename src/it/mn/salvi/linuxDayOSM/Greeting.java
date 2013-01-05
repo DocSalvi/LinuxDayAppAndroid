@@ -23,6 +23,7 @@ import android.content.Context;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Greeting {
@@ -47,7 +48,12 @@ public class Greeting {
 				dialog=null;
 			}
 		});
-		if (!ShowClose) {
+		ProgressBar progressBar = (ProgressBar)  dialog.findViewById(R.id.greetingProgressBar);
+		if (ShowClose) {
+			progressBar.setVisibility(View.GONE);
+			dialogButton.setVisibility(View.VISIBLE);
+		} else {
+			progressBar.setVisibility(View.VISIBLE);
 			dialogButton.setVisibility(View.GONE);
 		}
 

@@ -377,7 +377,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 						try {   // Per intercettare gli errori di parsing delle coordinate
 							taglist = new LDTag(taglist, titles, str, getResources());
 							if (firstElement) {
-								taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+								taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 								firstElement=false;	
 							}
 						} catch (Exception e) {
@@ -397,7 +397,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new LMTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {
@@ -414,7 +414,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMNetTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {
@@ -431,7 +431,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMDevTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {
@@ -448,7 +448,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMWebTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {
@@ -465,7 +465,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMEduTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {
@@ -482,7 +482,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMPrjTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {
@@ -499,7 +499,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new CalendarTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setEnable(preferences.getBoolean(taglist.toString(), true));
+						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
 						firstElement=false;	
 					}
 				} catch (Exception e) {

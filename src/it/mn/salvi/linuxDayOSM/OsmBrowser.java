@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,36 +62,35 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
     Thread loaderThread;
 	private ArrayList<TagDescription> descs;
     private AsyncTask<String, Void, String> loaderTask = null;
+    private TagDescription closeList;
 
     GeoTag tagList = null;
 
-    int oldZoom;
-    Point oldTile;
+    private int oldZoom;
+    private Point oldTile;
 
     int tileZoom;
-    Point firstTile;
-    Point screenCorner;
+    private Point firstTile;
+    private Point screenCorner;
     Point absTopLeft;
     Point absBottomRight;
 
-    Point startDrag;
-    Point startAbsolutePixel;
-    boolean zooming;
-    int startZoom;
-    int startDistance;
+    private Point startDrag;
+    private Point startAbsolutePixel;
+    private int startZoom;
 
-    Dimension tilesSize;
-    Dimension screenDim;
+    private Dimension tilesSize;
+    private Dimension screenDim;
     private Bitmap[][] tiles;
 
-    private final Paint mPaint = new Paint();
+    private Paint mPaint;
     private SeekBar mZoomBar;
     
     private String tilesDir;
     
     
-    ScaleGestureDetector mScaleDetector;    
-    GestureDetector mDetector;    
+    private ScaleGestureDetector mScaleDetector;    
+    private GestureDetector mDetector;    
     private boolean mIsScrolling = false;
     
     public OsmBrowser(Context context, AttributeSet attrs, int defStyle) {
@@ -122,12 +122,16 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
         firstTile.y = 0;
         oldTile = new Point();
         screenCorner = new Point();
+        mPaint = new Paint();
         setScreenCorner (tileSize, tileSize);
         loadTiles ();
         mScaleDetector = new ScaleGestureDetector(context, this);
         mDetector = new GestureDetector(context, this);
         descs = new ArrayList<TagDescription>();
-
+        Resources res = getResources();
+        closeList = new TagDescription(res.getString(R.string.CloseLegendaDescription), new PositionIcon(0.5, 0.5, BitmapFactory.decodeResource(res,R.drawable.icona_cancella)));
+        closeList.setActive(true);
+        
         System.out.println ("Dimensione " + tilesSize.width + "X" + tilesSize.height + " tessere");
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OSMView);
@@ -205,50 +209,50 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
    @Override  
    public boolean onSingleTapUp(MotionEvent event)  
    {
-       Point p = new Point ((int)Math.floor(event.getX()), (int)Math.floor(event.getY()));
-       Point abs = screenToAbsolutePixel(p);
-       GeoTag clicked=null;
-       int scale = 1 << (18 - tileZoom);
-       Log.i("OsmBrowser", "onSingleTapUp " + p.x + "," + p.y + " " + abs.x + "," + abs.y + " - " + scale);
-       for (GeoTag current=tagList; current!=null; current = current.getNext()) {
-           if (current.isHit(abs, scale)) {
-        	   clicked = current;
-           }
-       }
-       if (clicked != null) {
-    	   Log.i("OsmBrowser", "onSingleTapUp action");
-    	   clicked.action(getContext(), p);
-       }
-       return false;  
+	   Point p = new Point ((int)Math.floor(event.getX()), (int)Math.floor(event.getY()));
+	   Point abs = screenToAbsolutePixel(p);
+	   GeoTag clicked=null;
+	   int scale = 1 << (18 - tileZoom);
+	   Log.i("OsmBrowser", "onSingleTapUp " + p.x + "," + p.y + " " + abs.x + "," + abs.y + " - " + scale);
+	   for (GeoTag current=tagList; current!=null; current = current.getNext()) {
+		   if (current.isHit(abs, scale)) {
+			   clicked = current;
+		   }
+	   }
+	   if (clicked != null) {
+		   Log.i("OsmBrowser", "onSingleTapUp action");
+		   clicked.action(getContext(), p);
+	   }
+	   return false;  
    }  
 
-    public void setTilesDir (String tilesDir) {
-    	this.tilesDir = tilesDir;
-    }
+   public void setTilesDir (String tilesDir) {
+	   this.tilesDir = tilesDir;
+   }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    	tilesSize.width = (w + tileSize - 1) / tileSize + 2;
-    	tilesSize.height = (h + tileSize - 1) / tileSize + 2;
-    	screenDim.width = w;
-    	screenDim.height = h;
+   @Override
+   protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+	   tilesSize.width = (w + tileSize - 1) / tileSize + 2;
+	   tilesSize.height = (h + tileSize - 1) / tileSize + 2;
+	   screenDim.width = w;
+	   screenDim.height = h;
 
-    	tiles = new Bitmap[tilesSize.height][tilesSize.width];
-    	oldZoom=0;
-    	loadTiles ();
-    }
-    
-	void rediectedTuochEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_UP) {
-        	if(mIsScrolling) {
-        		mIsScrolling  = false;
-                firstTile.y += screenCorner.y / tileSize;
-                firstTile.x += screenCorner.x / tileSize;
-                setScreenCorner(screenCorner.x % tileSize, screenCorner.y % tileSize);
-                adjustAndLoad ();
-        	}
-        }
-    }
+	   tiles = new Bitmap[tilesSize.height][tilesSize.width];
+	   oldZoom=0;
+	   loadTiles ();
+   }
+
+   void rediectedTuochEvent(MotionEvent event) {
+	   if(event.getAction() == MotionEvent.ACTION_UP) {
+		   if(mIsScrolling) {
+			   mIsScrolling  = false;
+			   firstTile.y += screenCorner.y / tileSize;
+			   firstTile.x += screenCorner.x / tileSize;
+			   setScreenCorner(screenCorner.x % tileSize, screenCorner.y % tileSize);
+			   adjustAndLoad ();
+		   }
+	   }
+   }
 
    @Override
    public boolean onTouchEvent(MotionEvent event) {
@@ -262,12 +266,24 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 	   rediectedTuochEvent(event);
 	   return true;
    }
+   
+   private int printLabel (int x, int y, int displacement, int right, Canvas canvas, TagDescription d) {
+	   if (!d.isActive()) {
+		   mPaint.setColor(Color.GRAY);
+		   mPaint.setAlpha(64);
+		   canvas.drawRect(0, y - SPACE/2, right, y + d.getIcon().getSize().height + SPACE/2, mPaint);
+		   mPaint.setColor(Color.BLACK);
+	   }
+	   mPaint.setAlpha(d.isActive() ? 255 : 64);
+	   canvas.drawBitmap(d.getIcon().getIcon(), x, y, mPaint);
+	   canvas.drawText(d.getDescription(), (float)x+d.getIcon().getSize().width + 2, (float)(y - displacement + (d.getIcon().getSize().height / 2)), mPaint);
+	   return y + d.getIcon().getSize().height + SPACE;	   
+   }
 
    @Override
    public void onDraw(Canvas canvas) {
 	   int x = 0;
 	   int y = 0;
-	   descs.clear();
 	   super.onDraw(canvas);
 	   for (y = (screenCorner.y-tileSize+1)/tileSize; (y * tileSize - screenCorner.y) < screenDim.height; y++) {
 		   for (x = (screenCorner.x-tileSize+1)/tileSize; (x * tileSize - screenCorner.x) < screenDim.width; x++) {
@@ -283,23 +299,24 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 	   }
 	   int scale = 1 << (18 - tileZoom);
 	   // Log.i("Stdout", "TileZoom " + tileZoom + "Scale " + scale);
-	   for (GeoTag t = tagList; t != null; t = t.getNext()) {
-		   if (t.isActive()) {
-			   if (t.getDescription() != null && !descs.contains(t.getDescription())) {
-				   descs.add(t.getDescription());
-			   }
-			   t.paint(canvas, mPaint, absTopLeft, absBottomRight, scale);
-		   }
-	   }
 	   x=TOP;
-	   y=LEFT;
-	   int right = 0;
-	   for (int i=0; i < descs.size(); i++) {
-		   TagDescription d = descs.get(i);
-		   y += d.getIcon().getSize().height + SPACE;
-		   int width = x+d.getIcon().getSize().width + 2 + (int)Math.ceil(mPaint.measureText(d.getDescription())) + LEFT + SPACE;
-		   if (width > right) {
-			   right = width;
+	   y=LEFT + closeList.getIcon().getSize().height + SPACE;
+	   int right = x+closeList.getIcon().getSize().width + 2 + 
+			   (int)Math.ceil(mPaint.measureText(closeList.getDescription())) + LEFT + SPACE;
+	   descs.clear();
+	   for (GeoTag t = tagList; t != null; t = t.getNext()) {
+		   if (t.getDescription() != null && !descs.contains(t.getDescription())) {
+			   TagDescription d = t.getDescription();
+			   descs.add(d);
+			   y += d.getIcon().getSize().height + SPACE;
+			   int width = x+d.getIcon().getSize().width + 2 + 
+					   (int)Math.ceil(mPaint.measureText(d.getDescription())) + LEFT + SPACE;
+			   if (width > right) {
+				   right = width;
+			   }
+		   }
+		   if (t.isActive()) {
+			   t.paint(canvas, mPaint, absTopLeft, absBottomRight, scale);
 		   }
 	   }
 	   mPaint.setColor(Color.WHITE);	   
@@ -307,16 +324,14 @@ public class OsmBrowser extends View implements OnSeekBarChangeListener, OnScale
 	   mPaint.setAlpha(192);
 	   canvas.drawRect(0, 0, right, y, mPaint);
 	   mPaint.setColor(Color.BLACK);
-	   mPaint.setAlpha(255);
 	   x=TOP;
 	   y=LEFT;
 	   int displacement = (int)Math.ceil(mPaint.getFontMetrics().ascent/2);
 	   for (int i=0; i < descs.size(); i++) {
-		   TagDescription d = descs.get(i);
-		   canvas.drawBitmap(d.getIcon().getIcon(), x, y, mPaint);
-		   canvas.drawText(d.getDescription(), (float)x+d.getIcon().getSize().width + 2, (float)(y - displacement + (d.getIcon().getSize().height / 2)), mPaint);
-		   y += d.getIcon().getSize().height + SPACE;
+		   y = printLabel (x, y, displacement, right, canvas, descs.get(i));
 	   }
+	   y = printLabel (x, y, displacement, right, canvas, closeList);
+	   
 	   /* canvas.drawText("Zoom : " + tileZoom, (float)10.0, (float)20.0, mPaint);
 	   canvas.drawText("Coordinate tile : " + firstTile.x + "x" + firstTile.y, (float)10, (float)34, mPaint);
 	   canvas.drawText("Dimensione array : " + tilesSize.width + "x" + tilesSize.height, (float)10, (float)48, mPaint);

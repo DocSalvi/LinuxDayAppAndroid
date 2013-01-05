@@ -22,6 +22,7 @@ package it.mn.salvi.linuxDayOSM;
 public class TagDescription {
 	private String description;
 	private PositionIcon icon;
+	private boolean active;
 	
 	public TagDescription (String description, PositionIcon icon) {
 		this.description = description;
@@ -34,5 +35,13 @@ public class TagDescription {
 	
 	public PositionIcon getIcon () {
 		return icon;
+	}
+	
+	public void setActive (boolean active) {
+		this.active = active;
+	}
+	
+	public boolean isActive () {
+		return active;
 	}
 }

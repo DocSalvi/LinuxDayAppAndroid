@@ -117,7 +117,7 @@ public abstract class GeoTag {
 
   abstract public void action (Context context, Point p);
   abstract public boolean isActive();
-  abstract public void setEnable(boolean state);
+  abstract public void setActive(boolean state);
   abstract public boolean canDisable();
   abstract public TagDescription getDescription();
   abstract public PositionIcon getIcon(int level);

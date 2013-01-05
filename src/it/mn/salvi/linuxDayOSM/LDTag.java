@@ -28,7 +28,6 @@ import android.graphics.Point;
 import android.text.Html;
 
 public class LDTag extends GeoTag {
-  private static boolean enabled = true;
   private static TagDescription description = null;
   private static PositionIcon[] icons = new PositionIcon[2];
 
@@ -103,12 +102,12 @@ public class LDTag extends GeoTag {
 
   @Override
   public boolean isActive() {
-	return enabled;
+	return description.isActive();
   }
 
   @Override
-  public void setEnable(boolean state) {
-	enabled = state;
+  public void setActive(boolean active) {
+	description.setActive(active);
   }
 
   @Override

@@ -24,7 +24,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
 public class BMDevTag extends BaseLMTag {
-	  private static boolean enabled = true;
 	  private static TagDescription description = null;
 	  private static PositionIcon[] icons = new PositionIcon[2];
 
@@ -66,12 +65,12 @@ public class BMDevTag extends BaseLMTag {
 
 	  @Override
 	  public boolean isActive() {
-		return enabled;
+		return description.isActive();
 	  }
 
 	  @Override
-	  public void setEnable(boolean state) {
-		enabled = state;
+	  public void setActive(boolean state) {
+		description.setActive(state);
 	  }
 
 	  @Override

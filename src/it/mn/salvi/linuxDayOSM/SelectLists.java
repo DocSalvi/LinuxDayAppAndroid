@@ -76,7 +76,7 @@ public class SelectLists {
 				SharedPreferences.Editor editor = preferences.edit();
 				for (int i = 0; i < boxes.size(); i++) {
 					listCheckBox lcb = boxes.get(i);
-					lcb.list.setEnable(lcb.box.isChecked());
+					lcb.list.setActive(lcb.box.isChecked());
 					editor.putBoolean(lcb.box.toString(), lcb.box.isChecked()); // value to store
 				}
 				editor.commit();

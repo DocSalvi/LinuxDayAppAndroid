@@ -64,7 +64,7 @@ public class HereTag extends GeoTag {
   }
 
   @Override
-  public void setEnable(boolean state) {
+  public void setActive(boolean state) {
   }
 
   @Override

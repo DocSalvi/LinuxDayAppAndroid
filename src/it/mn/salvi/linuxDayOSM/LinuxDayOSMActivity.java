@@ -40,6 +40,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 
 public class LinuxDayOSMActivity extends Activity  {
@@ -108,6 +109,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
     	String packageName =  getPackageName();
     	mOsmBrowser.setTilesDir(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + packageName + "/files/Tiles");
     	mOsmBrowser.setZoomBar((SeekBar) findViewById(R.id.zoomBar));
+    	mOsmBrowser.setOpenLegenda((ImageButton)findViewById(R.id.open_legenda));
 
     	final ConnectivityManager connMgr = (ConnectivityManager)  
     			this.getSystemService(Context.CONNECTIVITY_SERVICE);   
@@ -377,7 +379,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 						try {   // Per intercettare gli errori di parsing delle coordinate
 							taglist = new LDTag(taglist, titles, str, getResources());
 							if (firstElement) {
-								taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+								taglist.getDescription().initWithPreferences(preferences);
 								firstElement=false;	
 							}
 						} catch (Exception e) {
@@ -386,6 +388,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 					}
 				}
 			}
+			mOsmBrowser.setTags(taglist);
 			
 			url = new URL(getResources().getString(R.string.LugMapRepositoryName));
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -397,13 +400,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new LMTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			mOsmBrowser.setTags(taglist);
+
 			url = new URL(getResources().getString(R.string.BMNetRepositoryName));
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
@@ -414,13 +419,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMNetTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			mOsmBrowser.setTags(taglist);
+
 			url = new URL(getResources().getString(R.string.BMDevRepositoryName));
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
@@ -431,13 +438,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMDevTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			mOsmBrowser.setTags(taglist);
+
 			url = new URL(getResources().getString(R.string.BMWebRepositoryName));
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
@@ -448,13 +457,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMWebTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			mOsmBrowser.setTags(taglist);
+
 			url = new URL(getResources().getString(R.string.BMEduRepositoryName));
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
@@ -465,13 +476,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMEduTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			mOsmBrowser.setTags(taglist);
+
 			url = new URL(getResources().getString(R.string.BMPrjRepositoryName));
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
@@ -482,13 +495,15 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new BMPrjTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			mOsmBrowser.setTags(taglist);
+
 			url = new URL(getResources().getString(R.string.CalendarRepositoryName));
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
 			str = in.readLine().trim();
@@ -499,7 +514,7 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 				try {   // Per intercettare gli errori di parsing delle coordinate
 					taglist = new CalendarTag(taglist, titles, str, getResources());
 					if (firstElement) {
-						taglist.setActive(preferences.getBoolean(taglist.toString(), true));
+						taglist.getDescription().initWithPreferences(preferences);
 						firstElement=false;	
 					}
 				} catch (Exception e) {

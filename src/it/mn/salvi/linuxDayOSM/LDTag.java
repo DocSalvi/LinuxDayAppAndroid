@@ -88,7 +88,7 @@ public class LDTag extends GeoTag {
 	  }
 	  if (description == null) {
 		  try {
-			  description = new TagDescription(res.getString(R.string.LinuxDayDescription), icons[0]);
+			  description = new TagDescription(res.getString(R.string.LinuxDayDescription), icons[0], "LDTag");
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }

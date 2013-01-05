@@ -51,7 +51,7 @@ public class BMWebTag extends BaseLMTag {
 		  }
 		  if (description == null) {
 			  try {
-				  description = new TagDescription(res.getString(R.string.BMWebDescription), icons[0]);
+				  description = new TagDescription(res.getString(R.string.BMWebDescription), icons[0], "BMWebTag");
 			  } catch (Exception e) {
 				  e.printStackTrace();
 			  }

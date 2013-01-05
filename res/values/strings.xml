@@ -58,5 +58,6 @@
     <color name="lightgrey">#cccccc</color>
     <color name="black">#000000</color>
     <string name="CloseLegendaDescription">Chiudi la legenda</string>
+    <string name="open_legenda_description">Apri la Legenda</string>
     
 </resources>

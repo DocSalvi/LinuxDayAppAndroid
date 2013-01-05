@@ -51,7 +51,7 @@ public class BMEduTag extends BaseLMTag {
 		  }
 		  if (description == null) {
 			  try {
-				  description = new TagDescription(res.getString(R.string.BMEduDescription), icons[0]);
+				  description = new TagDescription(res.getString(R.string.BMEduDescription), icons[0], "BMEduTag");
 			  } catch (Exception e) {
 				  e.printStackTrace();
 			  }

@@ -51,7 +51,7 @@ public class BMNetTag extends BaseLMTag {
 		  }
 		  if (description == null) {
 			  try {
-				  description = new TagDescription(res.getString(R.string.BMNetDescription), icons[0]);
+				  description = new TagDescription(res.getString(R.string.BMNetDescription), icons[0], "BMNetTag");
 			  } catch (Exception e) {
 				  e.printStackTrace();
 			  }

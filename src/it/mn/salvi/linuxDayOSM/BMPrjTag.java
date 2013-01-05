@@ -51,7 +51,7 @@ public class BMPrjTag extends BaseLMTag {
 		  }
 		  if (description == null) {
 			  try {
-				  description = new TagDescription(res.getString(R.string.BMPrjDescription), icons[0]);
+				  description = new TagDescription(res.getString(R.string.BMPrjDescription), icons[0], "BMPrjTag");
 			  } catch (Exception e) {
 				  e.printStackTrace();
 			  }

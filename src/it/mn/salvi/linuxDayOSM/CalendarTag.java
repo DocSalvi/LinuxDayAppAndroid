@@ -86,14 +86,14 @@ public class CalendarTag extends BaseLMTag {
 		}
 		if (description == null) {
 			try {
-				description = new TagDescription(res.getString(R.string.CalendarDescription), icons[0]);
+				description = new TagDescription(res.getString(R.string.CalendarDescription), icons[0], "CalendarTag");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		if (descriptionOld == null) {
 			try {
-				descriptionOld = new TagDescription(res.getString(R.string.CalendarDescriptionOld), icons[2]);
+				descriptionOld = new TagDescription(res.getString(R.string.CalendarDescriptionOld), icons[2], "CalendarTag");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

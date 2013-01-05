@@ -51,7 +51,7 @@ public class LMTag extends BaseLMTag {
 	  }
 	  if (description == null) {
 		  try {
-			  description = new TagDescription(res.getString(R.string.LugDescription), icons[0]);
+			  description = new TagDescription(res.getString(R.string.LugDescription), icons[0], "LMTag");
 		  } catch (Exception e) {
 			  e.printStackTrace();
 		  }

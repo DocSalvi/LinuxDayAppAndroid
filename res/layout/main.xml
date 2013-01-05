@@ -33,39 +33,38 @@
             android:text="@string/LinuxDayDate"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     
-        <it.mn.salvi.linuxDayOSM.OsmBrowser
-            android:id="@+id/osmbrowser"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_alignTop="@+id/zoomBarContainer"
-            tileSize="24" />
 
+        <it.mn.salvi.linuxDayOSM.OsmBrowser
+          	android:id="@+id/osmbrowser"
+           	android:layout_width="fill_parent"
+           	android:layout_height="match_parent"
+           	android:layout_alignTop="@+id/zoomBarContainer"
+           	tileSize="24" />
+
+		<ImageButton
+			android:id="@+id/open_legenda"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:cropToPadding="false"
+			android:paddingLeft="10dp"
+			android:contentDescription="@string/open_legenda_description"
+			android:src="@drawable/icona_legenda" />
+       
         <RelativeLayout
             android:id="@+id/zoomBarContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/LDDate"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" >
 
-        <TextView
-                        android:id="@+id/text"
-                        android:visibility="visible"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center_horizontal"
-                        android:textColor="#ff8888ff"
-                        android:textSize="24sp"/>
-
-        <SeekBar
-            android:id="@+id/zoomBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:max="16"
-             />
+        	<SeekBar
+            	android:id="@+id/zoomBar"
+            	android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"
+            	android:layout_alignParentLeft="true"
+            	android:layout_alignParentBottom="true"
+            	android:max="16"
+             	/>
 
 
         </RelativeLayout>

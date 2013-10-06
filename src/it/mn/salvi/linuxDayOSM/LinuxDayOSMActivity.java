@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -352,24 +353,29 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
     private GeoTag loadTagsCategory (GeoTag taglist, SharedPreferences preferences, boolean isCvs, int repo, int repoOld, Class<?> tag) {
 		try {
 			boolean firstElement = true;
-
+			BufferedReader in = null;
 			URL url = null;
 			// URL url = new URL("http://www.linuxday.it/2011/data/");
 			try {
 				url = new URL(getResources().getString(repo));
+				in = new BufferedReader(new InputStreamReader(url.openStream()));
 			} catch (Exception e) {
 				if (repoOld != 0) {
 					try {
-						url = new URL(getResources().getString(repoOld));
+						Calendar now = Calendar.getInstance();   // This gets the current date and time.
+						int year = now.get(Calendar.YEAR);
+						String oldUrl = getResources().getString(repoOld).replace("%s", String.valueOf(year));
+						System.out.println("Apro vecchio repository " + oldUrl);
+						url = new URL(oldUrl);
+						in = new BufferedReader(new InputStreamReader(url.openStream()));
 					} catch (Exception e1) {
-						url = null;
+						in = null;
 					}
 				} else {
-					url = null;					
+					in = null;					
 				}
 			}
-			if (url != null) {
-				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+			if (in != null) {
 				String str = in.readLine().trim();
 				String titles[] = (isCvs) ? OsmBrowser.csvParser(str) : OsmBrowser.tabParser(str);    // La prima linea sono i titoli
 				while ((str = in.readLine()) != null) {

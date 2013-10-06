@@ -28,7 +28,7 @@
     <string name="URL">Sito WEB :</string>
     <string name="close">Chiudi</string>
     <string name="RepositoryName">http://www.linuxday.it/data/</string>
-    <string name="RepositoryNameOld">http://www.linuxday.it/2011/data/</string>
+    <string name="RepositoryNameOld">http://www.linuxday.it/%s/data/</string>
     <string name="LugMapRepositoryName">http://lugmap.it/dati.txt</string>
     <string name="BMNetRepositoryName">http://businessmap.it/dati_networking.txt</string>
     <string name="BMDevRepositoryName">http://businessmap.it/dati_sviluppo.txt</string>

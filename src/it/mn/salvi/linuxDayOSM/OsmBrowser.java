@@ -38,6 +38,7 @@ import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -51,6 +52,8 @@ import android.widget.ZoomControls;
 /**
  * @author salvi
  *
+ *
+ * Text size -> 12 at mdpi;
  */
 
 public class OsmBrowser extends View implements OnScaleGestureListener, OnGestureListener {
@@ -58,6 +61,9 @@ public class OsmBrowser extends View implements OnScaleGestureListener, OnGestur
     static final int TOP = 5;
     static final int LEFT = 5;
     static final int SPACE = 3;
+    
+    static final int FONTSIZE=12;
+    static final int MDPI=160;
 
     Thread loaderThread;
 	private ArrayList<TagDescription> descs;
@@ -68,6 +74,8 @@ public class OsmBrowser extends View implements OnScaleGestureListener, OnGestur
 
     private int oldZoom;
     private Point oldTile;
+    
+    private int dpi;
 
     int tileZoom;
     private Point firstTile;
@@ -145,7 +153,6 @@ public class OsmBrowser extends View implements OnScaleGestureListener, OnGestur
     }
 
     private void osmInitialyze (Context context, AttributeSet attrs) {
-        screenDim = new Dimension(512,512);
         tilesSize = new Dimension();
         tilesSize.width = 2;
         tilesSize.height = 2;
@@ -158,8 +165,6 @@ public class OsmBrowser extends View implements OnScaleGestureListener, OnGestur
         oldTile = new Point();
         screenCorner = new Point();
         mPaint = new Paint();
-        setScreenCorner (tileSize, tileSize);
-        loadTiles ();
         mScaleDetector = new ScaleGestureDetector(context, this);
         mDetector = new GestureDetector(context, this);
         descs = new ArrayList<TagDescription>();
@@ -353,6 +358,8 @@ public class OsmBrowser extends View implements OnScaleGestureListener, OnGestur
 				}
 			}
 		}
+		// System.out.println("Text Size = " + mPaint.getTextSize());
+		mPaint.setTextSize(dpi*FONTSIZE/MDPI);
 		int scale = 1 << (18 - tileZoom);
 		// Log.i("Stdout", "TileZoom " + tileZoom + "Scale " + scale);
 		x= LEFT;
@@ -798,5 +805,12 @@ public class OsmBrowser extends View implements OnScaleGestureListener, OnGestur
 				OsmBrowser.this.postInvalidate();
 			}
 		});
+	}
+
+	public void setDisplayMetrics(DisplayMetrics metrics) {
+		dpi = metrics.densityDpi;
+        screenDim = new Dimension(metrics.widthPixels, metrics.heightPixels);		
+        setScreenCorner (tileSize, tileSize);
+        loadTiles ();
 	}
 }

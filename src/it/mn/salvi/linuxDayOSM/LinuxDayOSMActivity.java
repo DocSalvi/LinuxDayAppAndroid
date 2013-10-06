@@ -15,6 +15,11 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * ldpi: 120
+ * mdpi: 160
+ * hdpi: 240 *
+ * xhdpi: 320 (LG)
  */
 package it.mn.salvi.linuxDayOSM;
 
@@ -40,6 +45,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -107,7 +113,11 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.main);
 
+    	DisplayMetrics metrics = new DisplayMetrics();    
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);    
+
     	mOsmBrowser = (OsmBrowser) findViewById(R.id.osmbrowser);
+    	mOsmBrowser.setDisplayMetrics (metrics);	// Deve essere chiamato subito, perché imposta la dimensione, usata da tutti
     	centerItaly ();
     	String packageName =  getPackageName();
     	mOsmBrowser.setTilesDir(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + packageName + "/files/Tiles");

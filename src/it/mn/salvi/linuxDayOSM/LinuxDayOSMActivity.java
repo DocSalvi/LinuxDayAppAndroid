@@ -417,11 +417,12 @@ http://calendar.lugmap.it/forge/events/geoevents.txt
 		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
 		taglist = loadTagsCategory (taglist, preferences, true, R.string.RepositoryName, R.string.RepositoryNameOld, LDTag.class);
 		taglist = loadTagsCategory (taglist, preferences, false, R.string.LugMapRepositoryName, 0, LMTag.class);
-		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMNetRepositoryName, 0, BMNetTag.class);
+		/* 2013-10-19 - "Sospese" le liste di Business Map, finché non saranno mantenute meglio */
+		/* taglist = loadTagsCategory (taglist, preferences, false, R.string.BMNetRepositoryName, 0, BMNetTag.class);
 		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMDevRepositoryName, 0, BMDevTag.class);
 		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMWebRepositoryName, 0, BMWebTag.class);
 		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMEduRepositoryName, 0, BMEduTag.class);
-		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMPrjRepositoryName, 0, BMPrjTag.class);
+		taglist = loadTagsCategory (taglist, preferences, false, R.string.BMPrjRepositoryName, 0, BMPrjTag.class); */
 		taglist = loadTagsCategory (taglist, preferences, false, R.string.CalendarRepositoryName, 0, CalendarTag.class);
     }
 }

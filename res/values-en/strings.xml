@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ strings.xml
+ LinuxDayOSM
+ Copyright (C) Stefano Salvi 2012 <stefano@salvi.mn.it>
+
+ LinuxDayOSM is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ LinuxDayOSM is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources>
+
+    <string name="hello">Hello World, LinuxDayOSMActivity!</string>
+    <string name="app_name">LinuxDayOSM</string>
+    <string name="Organization">Organization :</string>
+    <string name="Location">Location :</string>
+    <string name="Address">Address :</string>
+    <string name="City">City :</string>
+    <string name="URL">Website :</string>
+    <string name="close">Close</string>
+    <string name="RepositoryName">http://www.linuxday.it/data/</string>
+    <string name="RepositoryNameOld">http://www.linuxday.it/%s/data/</string>
+    <string name="LugMapRepositoryName">http://lugmap.it/dati.txt</string>
+    <string name="BMNetRepositoryName">http://businessmap.it/dati_networking.txt</string>
+    <string name="BMDevRepositoryName">http://businessmap.it/dati_sviluppo.txt</string>
+    <string name="BMWebRepositoryName">http://businessmap.it/dati_web.txt</string>
+    <string name="BMEduRepositoryName">http://businessmap.it/dati_formazione.txt</string>
+    <string name="BMPrjRepositoryName">http://businessmap.it/dati_consulenza.txt</string>
+    <string name="CalendarRepositoryName">http://www.linux.it/data/geoevents.txt</string>
+    <string name="ILSref"><![CDATA[<h1>ITALIAN LINUX SOCIETY</h1>http://www.linux.it]]></string>
+    <string name="GreetingText"><![CDATA[<h2>LinuxDayApp</h2>
+        <b>Author:</b> Stefano Salvi mailto:<u>stefano.salvi@linux.it</u><br/>Released under <b>GPL</b> license: <u>http://www.gnu.org/licenses/gpl.html</u><br />
+        Source code can be downloaded from <u>https://github.com/DocSalvi/LinuxDayAppAndroid</u><br />
+        Maps are downloaded from <b>OpenStreetMap</b> project: <u>http://www.openstreetmap.org/</u>]]></string>
+    <string name="LogoDescription">LinuxDay Logo</string>
+    <string name="LinuxDayDate">LinuxDay 2012 – October 27</string>
+    <string name="LinuxDayDescription">Linux Day</string>
+    <string name="LugDescription">Linux User Group</string>
+    <string name="HereDescription">Your position</string>
+    <string name="BMNetDescription">Business Map – Networking</string>
+    <string name="BMDevDescription">Business Map – Software Development</string>
+    <string name="BMWebDescription">Business Map – Web</string>
+    <string name="BMEduDescription">Business Map – Training</string>
+    <string name="BMPrjDescription">Business Map – Consulting</string>
+    <string name="CalendarDescription">Events schedule</string>
+    <string name="CalendarDescriptionOld">Events schedule - Old</string>
+    <string name="LinuxDayDialog"><![CDATA[<p><b>Organization: </b>%1$s</p><p><b>Location: </b>%2$s</b><p><b>Address: </b>%3$s</p><p><b>City: </b>%4$s</p><p><b>Website: </b>%5$s</p>]]></string>
+    <string name="LugDialog"><![CDATA[<p><b>Organization: </b>%1$s</p><p><b>Website: </b>%2$s</p>]]></string>
+    <string name="CalendarDialog"><![CDATA[<p><b>Date: </b>%1$s</p><p><b>Event: </b>%2$s</p><p><b>Website: </b>%3$s</p>]]></string>
+    <string name="CloseLegendaDescription">Close glossary</string>
+    <string name="open_legenda_description">Open glossary</string>
+    <string name="LugTitle">Linux Users Group &#8230;</string>
+    <string name="BMDevTitle">Development under Linux &#8230;</string>
+    <string name="BMEduTitle">Courses on Linux &#8230;</string>
+    <string name="BMNetTitle">Connectivity using Linux &#8230;</string>
+    <string name="BMPrjTitle">Linux Consulting &#8230;</string>
+    <string name="BMWebTitle">Web sites developed under Linux &#8230;</string>
+    <string name="CalendarTitle">Evvent &#8230;</string>
+    <color name="lightgrey">#cccccc</color>
+    <color name="black">#000000</color>
+    <string name="greeting_title">Information &#8230;</string>
+</resources>

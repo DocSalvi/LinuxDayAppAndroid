@@ -67,4 +67,5 @@
     <string name="CalendarTitle">Evento &#8230;</string>
     <color name="lightgrey">#cccccc</color>
     <color name="black">#000000</color>
+    <string name="greeting_title">Informazioni &#8230;</string>
 </resources>

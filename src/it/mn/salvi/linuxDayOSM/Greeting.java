@@ -32,7 +32,7 @@ public class Greeting {
 	public Greeting(Context context, boolean ShowClose) {
 		dialog = new Dialog(context);
 		dialog.setContentView(R.layout.greeting);
-		dialog.setTitle("Informazioni...");
+		dialog.setTitle(context.getString(R.string.greeting_title));
 		TextView text = (TextView) dialog.findViewById(R.id.ILS);
 		text.setText(Html.fromHtml(context.getString(R.string.ILSref)));
 
